@@ -1,14 +1,17 @@
-name: Download from Drive
+name: Download from Google Drive
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual triggering
+
 jobs:
-  download:
+  download-folder:
     runs-on: ubuntu-latest
     steps:
-      - name: download
-        uses: Fork-on-the-Table-Collective/upload-to-download-from-gdrive@v2.0.0
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Google Drive folder
+        uses: google-drive-download-action@v1 # Or another suitable action like setup-gdrive
         with:
+          folderId: '1yJ0dmBbzeznNQKb3eXFP_ae0IFFXp8Rr' # Replace with your folder ID
+          path: './Documentos' # Target path in your repo
           credentials: ${{ secrets.GIT_UPLOAD_CREDS }}
-          actionType: download
-          localPath: ./Documents/
-          googleFileId: 1yJ0dmBbzeznNQKb3eXFP_ae0IFFXp8Rr
