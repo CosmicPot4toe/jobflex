@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download Google Drive folder
-        uses: google-drive-download-action@v1 # Or another suitable action like setup-gdrive
+        uses: raeperd/google-drive-download-action@v1 # Or another suitable action like setup-gdrive
         with:
           folderId: '1yJ0dmBbzeznNQKb3eXFP_ae0IFFXp8Rr' # Replace with your folder ID
           path: './Documentos' # Target path in your repo
