@@ -1,0 +1,14 @@
+name: Download from Drive
+on:
+  workflow_dispatch:
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: download
+        uses: Fork-on-the-Table-Collective/upload-to-download-from-gdrive@v2.0.0
+        with:
+          credentials: ${{ secrets.GIT_UPLOAD_CREDS }}
+          actionType: download
+          localPath: ./Documents/
+          googleFileId: 1yJ0dmBbzeznNQKb3eXFP_ae0IFFXp8Rr
