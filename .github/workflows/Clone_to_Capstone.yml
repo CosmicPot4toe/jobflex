@@ -31,7 +31,7 @@ jobs:
           # change to destination repository
           cd dest
           # copy a files or folders from source to destination
-          cp -rf ../src/* .
+          cp -rf ../src/Jobflex ../src
           # this is useful for debugging
           git status
           # github.actor is the name of the login that checked in the commit in the source repository       
@@ -42,6 +42,6 @@ jobs:
           git add .
           # check if any files actually changed, if files are different them commit them 
           # include the sha commit from the source repository as the commit in the destiation commit.
-          git diff --quiet && git diff --staged --quiet || git commit -m "from ${{ github.sha }}" 
+          git diff --quiet && git diff --staged --quiet || git commit -m "mirror repo en capstone Run:N°${{github.run_number}}" 
           # push the changes
           git push origin
