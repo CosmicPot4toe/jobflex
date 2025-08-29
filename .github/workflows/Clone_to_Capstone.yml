@@ -4,6 +4,7 @@ on:
   push:
     branches:
       main
+  workflow_dispatch:
 env:
   email:
     62482494+CosmicPot4toe@users.noreply.github.com
@@ -31,7 +32,7 @@ jobs:
           # change to destination repository
           cd dest
           # copy a files or folders from source to destination
-          cp -rf ../src/Jobflex ../src
+          cp -rf ../src/Jobflex .
           # this is useful for debugging
           git status
           # github.actor is the name of the login that checked in the commit in the source repository       
