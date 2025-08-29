@@ -1,0 +1,47 @@
+name: Clone_to_Capstone
+run-name: ${{ github.actor }} esta publicando el proyecto
+on:
+  push:
+    branches:
+      main
+env:
+  email:
+    62482494+CosmicPot4toe@users.noreply.github.com
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          path: 'src'
+          ref: 'main'
+          persist-credentials: false
+
+      - name: Checkout Destination
+        uses: actions/checkout@v4
+        with:
+          path: 'dest'
+          ref: 'main'
+          repository: 'Alisibarra/JobFlex_Capstone'
+          token: ${{ secrets.TOKEN }}
+          persist-credentials: true
+
+      - run: |
+          # change to destination repository
+          cd dest
+          # copy a files or folders from source to destination
+          cp -rf ../src/* .
+          # this is useful for debugging
+          git status
+          # github.actor is the name of the login that checked in the commit in the source repository       
+          git config --global user.name ${{ github.actor }}
+          # configure your email address
+          git config --global user.email ${{env.email}}
+          # add all the copied files to the destination repo for a commit
+          git add .
+          # check if any files actually changed, if files are different them commit them 
+          # include the sha commit from the source repository as the commit in the destiation commit.
+          git diff --quiet && git diff --staged --quiet || git commit -m "from ${{ github.sha }}" 
+          # push the changes
+          git push origin
