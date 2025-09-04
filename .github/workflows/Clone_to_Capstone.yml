@@ -1,9 +1,9 @@
 name: Clone_to_Capstone
 run-name: ${{ github.actor }} esta publicando el proyecto
 on:
-  push:
-    branches:
-      main
+  # push:
+  #   branches:
+  #     main
   workflow_dispatch:
 env:
   email:
