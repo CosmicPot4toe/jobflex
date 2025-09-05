@@ -81,7 +81,7 @@ DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
 				# Render nos da esta url de postgres o podemos usar la de aws si la conseguimos
-        default='',
+        default='dpg-d2tlldh5pdvs739momp0-a:5432',
         conn_max_age=600
     )
 }
