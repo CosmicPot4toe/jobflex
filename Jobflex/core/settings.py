@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-crw6j)=%6qm9z#)!s%jsigvyt4rkj#@a*#1*^v4_!hw2racfo3
 DEBUG = True
 
 ALLOWED_HOSTS = [
-	'jobflex-pwwz.onrender.com'
+	'jobflex-pwwz.onrender.com',
+	'jobflex-cb9b.onrender.com'
 ]
 
 
