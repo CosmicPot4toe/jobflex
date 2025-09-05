@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-crw6j)=%6qm9z#)!s%jsigvyt4rkj#@a*#1*^v4_!hw2racfo3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+	'jobflex-pwwz.onrender.com'
+]
 
 
 # Application definition
