@@ -3,7 +3,7 @@
 set -o errexit
 
 # Modify this line as needed for your package manager (pip, poetry, etc.)
-pip install -r reqs.txt
+pip install -r ../reqs.txt
 
 # Convert static asset files
 python manage.py collectstatic --no-input
