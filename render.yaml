@@ -9,12 +9,12 @@ services:
     plan: free
     name: Jobflex
     runtime: python
-    rootDirectory: ./Jobflex
+    rootDir: ./Jobflex
     buildCommand: './build.sh'
     startCommand: 'python -m gunicorn core.asgi:application -k uvicorn.workers.UvicornWorker' 
     envVars:
       - key: DEBUG
-        value: FALSE
+        value: 'FALSE'
       - key: DATABASE_URL
         fromDatabase:
           name: JobflexDB
