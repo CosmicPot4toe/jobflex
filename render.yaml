@@ -9,7 +9,8 @@ services:
     plan: free
     name: Jobflex
     runtime: python
-    buildCommand: './Jobflex/build.sh'
+    rootDirectory: ./Jobflex
+    buildCommand: './build.sh'
     startCommand: 'python -m gunicorn core.asgi:application -k uvicorn.workers.UvicornWorker' 
     envVars:
       - key: DEBUG
