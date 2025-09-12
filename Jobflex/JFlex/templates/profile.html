@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Candidato - JobFlex</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static '/CSS/style.css'%}">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#8CA01A',
+                        'secondary': '#89746F',
+                        'light-gray': '#D8D9DD',
+                        'dark': '#312F32',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-gray font-sans flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-white p-4 shadow-md fixed w-full top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'index'%}" class="text-2xl font-bold text-primary">JobFlex</a>
+            <div class="flex items-center space-x-4">
+                <button class="relative">
+                    <svg class="w-6 h-6 text-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                    <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+                </button>
+                <div class="relative">
+                    <button id="user-menu-button" class="flex items-center space-x-2">
+                        <span class="font-semibold text-dark">John Doe</span>
+                        <svg class="w-4 h-4 text-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                        <a href="#" class="block px-4 py-2 text-sm text-dark hover:bg-light-gray">Ver Perfil</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-dark hover:bg-light-gray">Postulaciones</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-dark hover:bg-light-gray">Cuenta</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-red-500 hover:bg-light-gray">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex flex-col md:flex-row pt-16">
+
+        <!-- Columna Izquierda: Datos del Usuario -->
+        <div class="w-full md:w-1/3 bg-white p-8 shadow-lg">
+            <div class="flex flex-col items-center">
+                <img src="https://picsum.photos/seed/user-profile/200/200" alt="Foto de perfil" class="w-32 h-32 rounded-full border-4 border-primary mb-4">
+                <h2 class="text-2xl font-bold text-dark">John Doe</h2>
+                <p class="text-secondary">Desarrollador Full-Stack</p>
+                <div class="mt-4 relative">
+                    <button id="availability-button" class="flex items-center space-x-2 cursor-pointer border border-gray-300 rounded-full py-1 px-3">
+                        <span id="availability-dot" class="h-3 w-3 rounded-full bg-green-500"></span>
+                        <span id="availability-text" class="text-dark font-semibold">Disponible</span>
+                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="availability-menu" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                        <a href="#" class="flex items-center px-4 py-2 text-sm text-dark hover:bg-light-gray" data-status="available">
+                            <span class="h-3 w-3 rounded-full bg-green-500 mr-3"></span>
+                            Disponible
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-2 text-sm text-dark hover:bg-light-gray" data-status="unavailable">
+                            <span class="h-3 w-3 rounded-full bg-red-500 mr-3"></span>
+                            No disponible
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8">
+                <h3 class="text-lg font-bold text-dark mb-4">Datos Personales</h3>
+                <ul class="space-y-2 text-secondary">
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>john.doe@example.com</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>+1 234 567 890</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>San Francisco, CA</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Perfiles Profesionales -->
+        <div class="w-full md:w-2/3 p-8 flex flex-col">
+            <div class="flex-grow">
+                <h2 class="text-3xl font-bold text-dark mb-6">Perfiles Profesionales</h2>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <!-- Perfil 1 -->
+                    <div class="flex items-center justify-between border-b border-light-gray pb-4 mb-4">
+                        <div>
+                            <h4 class="text-xl font-bold text-dark">CV Principal - Desarrollador Full-Stack</h4>
+                            <p class="text-secondary">Actualizado por última vez: 10 de Septiembre, 2025</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-blue-500 hover:text-blue-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
+                            <button class="text-green-500 hover:text-green-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
+                            <button class="text-red-500 hover:text-red-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                        </div>
+                    </div>
+                    <!-- Perfil 2 -->
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="text-xl font-bold text-dark">CV Secundario - Especialista en Frontend</h4>
+                            <p class="text-secondary">Actualizado por última vez: 15 de Agosto, 2025</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-blue-500 hover:text-blue-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
+                            <button class="text-green-500 hover:text-green-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
+                            <button class="text-red-500 hover:text-red-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105">Ver Ofertas de Empleo</button>
+                    <button class="w-full bg-blue-200 text-blue-800 font-bold py-3 px-6 rounded-lg hover:bg-blue-300 transition-all transform hover:scale-105">Crear Nuevo CV</button>
+                </div>
+            </div>
+
+            <footer class="w-full mt-auto pt-8">
+                <div class="container mx-auto text-center text-sm">
+                    <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-4 mb-2">
+                        <a href="#" class="text-secondary hover:text-primary">Políticas de Privacidad</a>
+                        <span class="hidden md:inline text-gray-300">|</span>
+                        <a href="#" class="text-secondary hover:text-primary">Términos y Condiciones</a>
+                        <span class="hidden md:inline text-gray-300">|</span>
+                        <a href="#" class="text-secondary hover:text-primary">Soporte</a>
+                    </div>
+                    <p class="text-xs text-gray-500">&copy; 2025 JobFlex. Todos los derechos reservados.</p>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <script>
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenu = document.getElementById('user-menu');
+        const availabilityButton = document.getElementById('availability-button');
+        const availabilityMenu = document.getElementById('availability-menu');
+        const availabilityDot = document.getElementById('availability-dot');
+        const availabilityText = document.getElementById('availability-text');
+
+        userMenuButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            userMenu.classList.toggle('hidden');
+        });
+
+        availabilityButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            availabilityMenu.classList.toggle('hidden');
+        });
+
+        availabilityMenu.addEventListener('click', (event) => {
+            const target = event.target.closest('a');
+            if (target) {
+                event.preventDefault();
+                const status = target.dataset.status;
+                if (status === 'available') {
+                    availabilityDot.classList.remove('bg-red-500');
+                    availabilityDot.classList.add('bg-green-500');
+                    availabilityText.textContent = 'Disponible';
+                } else {
+                    availabilityDot.classList.remove('bg-green-500');
+                    availabilityDot.classList.add('bg-red-500');
+                    availabilityText.textContent = 'No disponible';
+                }
+                availabilityMenu.classList.add('hidden');
+            }
+        });
+
+        // Close the dropdowns if the user clicks outside of them
+        window.addEventListener('click', function(e){   
+            if (!userMenuButton.contains(e.target)){
+                userMenu.classList.add('hidden');
+            }
+            if (!availabilityButton.contains(e.target)){
+                availabilityMenu.classList.add('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>
