@@ -1,9 +1,3 @@
-databases:
-  - name: JobflexDB
-    plan: free
-    databaseName: jobflex_db
-    user: jobflex
-
 services:
   - type: web
     plan: free
@@ -15,10 +9,8 @@ services:
     envVars:
       - key: DEBUG
         value: 'FALSE'
-      - key: DATABASE_URL
-        fromDatabase:
-          name: JobflexDB
-          property: connectionString
+      - key: DB_NAME
+        value: 'jobflex-dbs'
       - key: SECRET_KEY
         generateValue: true
       - key: WEB_CONCURRENCY

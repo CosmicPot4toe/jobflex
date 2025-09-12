@@ -11,13 +11,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import dj_database_url
 import environ
 
 env = environ.Env(
 		DEBUG=(bool, True), # Define default values or types for variables
-		DATABASE_URL=(str,''),
-		RENDER_EXTERNAL_HOSTNAME=(str,'')
+		DB_NAME=(str,'jobflec-dbs'),
+		RENDER_EXTERNAL_HOSTNAME=(str,'127.0.0.1')
 )
 environ.Env.read_env() # Reads .env file
 
@@ -87,12 +86,18 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-				# Render nos da esta url de postgres o podemos usar la de aws si la conseguimos
-        default=env('DATABASE_URL'),
-        conn_max_age=600
-    )
+    'default': {
+			'ENGINE': 'mssql',
+			'NAME': env('DB_NAME'),
+			'USER': 'jobflex_admin',
+			'PASSWORD': '123456+A',
+			'HOST': 'jobflex-dbs.database.windows.net',
+			'PORT': '1433',
+			'OPTIONS': {
+					'driver': 'ODBC Driver 17 for SQL Server',
+					'extra_params': 'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;',
+			},
+		}
 }
 
 
