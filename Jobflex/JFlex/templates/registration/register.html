@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validación de Empresa - JobFlex</title>
+    <title>Registro - JobFlex</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{% static '/CSS/style.css'%}">
     <script>
@@ -71,29 +71,38 @@
             </div>
             <!-- Post-it Note -->
             <div class="relative z-10 bg-light-gray text-dark p-6 rounded-lg shadow-2xl transform -rotate-3 max-w-xs">
-                <h3 class="font-bold text-lg mb-2">¡Atención Empresas!</h3>
-                <p class="text-sm">Al validar su RUT, podremos autocompletar la información de su empresa para agilizar el proceso de registro.</p>
+                <h3 class="font-bold text-lg mb-2">¡Únete a la comunidad!</h3>
+                <p class="text-sm">Crea tu perfil en segundos y deja que las mejores empresas te encuentren. Tu próximo trabajo está a un clic de distancia.</p>
             </div>
         </div>
 
         <!-- Panel de Formulario (Derecha) -->
-        <div class="w-full md:w-3/5 flex flex-col p-8 md:p-12">
+        <div class="w-full md:w-3/5 flex flex-col items-center p-8 md:p-12">
             <div class="w-full max-w-md m-auto">
                 <div class="text-center mb-8">
-                     <h2 class="text-3xl">
+                     <h1 class="text-3xl">
                         <span class="text-gray-500">Bienvenido a</span>
                         <a href="{% url 'index'%}" class="text-primary font-bold">JobFlex</a>
-                    </h2>
+                    </h1>
                 </div>
 
-                <h2 class="text-3xl font-bold text-dark mb-2 text-center">Valida tu Empresa</h2>
-                <p class="text-secondary mb-8 text-center">Ingresa el RUT de tu empresa para comenzar el proceso de registro.</p>
+                <h2 class="text-3xl font-bold text-dark mb-2 text-center">Crea tu Cuenta</h2>
+                <p class="text-secondary mb-8 text-center">Únete a nuestra comunidad y encuentra tu próximo trabajo.</p>
 
-                <form action="{% url 'register_emp'%}" method="GET" class="space-y-6">
-                    <div>
-                        <label for="rut" class="block text-sm font-medium text-dark">RUT de la Empresa</label>
-                        <input type="text" name="rut" id="rut" required class="mt-1 block w-full p-3 border border-light-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: 76.123.456-7">
-                    </div>
+                <form method="post" class="space-y-4">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="relative">
+                            <label for="{{ field.id_for_label }}" class="input-label absolute top-3 left-3 text-sm font-medium text-dark transition-all duration-200 ease-in-out">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <p class="text-xs text-gray-500 mt-1">{{ field.help_text }}</p>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
 
                     <div class="flex items-center">
                         <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-primary border-light-gray rounded focus:ring-primary">
@@ -101,18 +110,43 @@
                     </div>
 
                     <div>
-                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform hover:scale-105">Validar y Continuar</button>
+                        <button type="submit" id="register-button" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform hover:scale-105">
+                            Crear Cuenta
+                            <span id="register-spinner" class="hidden ml-2 spinner"></span>
+                        </button>
                     </div>
                 </form>
 
-                <p class="mt-8 text-center text-sm text-dark">
-                    ¿No eres una empresa?
-                    <a href="{% url 'signup'%}" class="font-medium text-primary hover:underline">Regístrate aquí</a>
-                </p>
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-light-gray"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-secondary">O regístrate con</span>
+                        </div>
+                    </div>
 
-                <p class="mt-4 text-center text-sm text-dark">
-                    ¿Ya tienes una cuenta?
-                    <a href="{% url 'login'%}" class="font-medium text-primary hover:underline">Ingresa aquí</a>
+                    <div class="mt-6 text-center">
+                        <a href="{% url 'validate'%}" class="text-sm font-medium text-primary hover:underline">¿Eres una empresa? Regístrate aquí</a>
+                    </div>
+
+                    <div class="mt-6">
+                        <a href="#" class="w-full inline-flex justify-center py-3 px-4 border border-light-gray rounded-lg shadow-sm bg-white text-sm font-medium text-dark hover:bg-light-gray transition-all">
+                            <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.3v2.84C4.08 20.98 7.74 23 12 23z"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.16H2.3C1.42 8.84 1 10.36 1 12s.42 3.16 1.2 4.84l3.54-2.75z"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.74 1 4.08 3.02 2.3 6.16l3.54 2.75c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            <span>Continuar con Google</span>
+                        </a>
+                    </div>
+                </div>
+
+                <p class="mt-8 text-center text-sm text-dark">
+                    ¿Ya tienes cuenta?
+                    <a href="{% url 'login'%}" class="font-medium text-primary hover:underline">Inicia sesión aquí</a>
                 </p>
             </div>
 
@@ -130,5 +164,6 @@
             </footer>
         </div>
     </main>
+
 </body>
 </html>

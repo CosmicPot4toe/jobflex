@@ -1,12 +1,11 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validación de Empresa - JobFlex</title>
+    <title>Ingresar Código - JobFlex</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static '/CSS/style.css'%}">
+    <link rel="stylesheet" href="../CSS/style.css">
     <script>
         tailwind.config = {
             theme: {
@@ -41,9 +40,9 @@
     <!-- Navbar -->
     <nav class="bg-primary md:bg-white p-4 shadow-md fixed w-full top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="{% url 'index'%}" class="text-2xl font-bold text-white md:text-primary">JobFlex</a>
+            <a href="index.html" class="text-2xl font-bold text-white md:text-primary">JobFlex</a>
             <div>
-                <a href="{% url 'index'%}" class="text-white md:text-dark font-semibold hover:text-primary transition-colors">Volver a Inicio</a>
+                <a href="login.html" class="text-white md:text-dark font-semibold hover:text-primary transition-colors">Volver a Iniciar Sesión</a>
             </div>
         </div>
     </nav>
@@ -59,20 +58,10 @@
                  <div class="flex items-center whitespace-nowrap animate-marquee-right">
                     <span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span>
                  </div>
-                 <div class="flex items-center whitespace-nowrap animate-marquee-left">
-                    <span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span>
-                 </div>
-                 <div class="flex items-center whitespace-nowrap animate-marquee-right">
-                    <span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span>
-                 </div>
-                 <div class="flex items-center whitespace-nowrap animate-marquee-left">
-                    <span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span><span class="text-7xl font-extrabold mx-16">JobFlex</span>
-                 </div>
             </div>
-            <!-- Post-it Note -->
             <div class="relative z-10 bg-light-gray text-dark p-6 rounded-lg shadow-2xl transform -rotate-3 max-w-xs">
-                <h3 class="font-bold text-lg mb-2">¡Atención Empresas!</h3>
-                <p class="text-sm">Al validar su RUT, podremos autocompletar la información de su empresa para agilizar el proceso de registro.</p>
+                <h3 class="font-bold text-lg mb-2">Revisa tu Correo</h3>
+                <p class="text-sm">Hemos enviado un código de 6 dígitos a tu dirección de email. ¡No compartas este código con nadie!</p>
             </div>
         </div>
 
@@ -81,39 +70,42 @@
             <div class="w-full max-w-md m-auto">
                 <div class="text-center mb-8">
                      <h2 class="text-3xl">
-                        <span class="text-gray-500">Bienvenido a</span>
-                        <a href="{% url 'index'%}" class="text-primary font-bold">JobFlex</a>
+                        <span class="text-gray-500">Un paso más para</span>
+                        <a href="./index.html" class="text-primary font-bold">JobFlex</a>
                     </h2>
                 </div>
 
-                <h2 class="text-3xl font-bold text-dark mb-2 text-center">Valida tu Empresa</h2>
-                <p class="text-secondary mb-8 text-center">Ingresa el RUT de tu empresa para comenzar el proceso de registro.</p>
+                <h2 class="text-3xl font-bold text-dark mb-2 text-center">Ingresa tu Código</h2>
+                <p class="text-secondary mb-8 text-center">Introduce el código que recibiste para continuar.</p>
 
-                <form action="{% url 'register_emp'%}" method="GET" class="space-y-6">
+                <form method="post" action="{% url 'verify_code' %}" class="space-y-6">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <span class="block sm:inline">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     <div>
-                        <label for="rut" class="block text-sm font-medium text-dark">RUT de la Empresa</label>
-                        <input type="text" name="rut" id="rut" required class="mt-1 block w-full p-3 border border-light-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: 76.123.456-7">
+                        <label for="id_code" class="block text-sm font-medium text-dark">Código de Verificación</label>
+                        <input type="text" name="code" id="id_code" required pattern="[0-9]{6}" maxlength="6" class="mt-1 block w-full p-3 border border-light-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-center tracking-[1em]">
+                        {% if form.code.errors %}
+                            {% for error in form.code.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
-                    <div class="flex items-center">
-                        <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-primary border-light-gray rounded focus:ring-primary">
-                        <label for="terms" class="ml-2 block text-sm text-dark">Acepto los <a href="#" class="text-primary hover:underline">Términos y Condiciones</a></label>
-                    </div>
-
                     <div>
-                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform hover:scale-105">Validar y Continuar</button>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform hover:scale-105">Verificar Código</button>
                     </div>
                 </form>
 
-                <p class="mt-8 text-center text-sm text-dark">
-                    ¿No eres una empresa?
-                    <a href="{% url 'signup'%}" class="font-medium text-primary hover:underline">Regístrate aquí</a>
-                </p>
-
-                <p class="mt-4 text-center text-sm text-dark">
-                    ¿Ya tienes una cuenta?
-                    <a href="{% url 'login'%}" class="font-medium text-primary hover:underline">Ingresa aquí</a>
-                </p>
+                <div class="mt-8 text-center text-sm text-dark">
+                    <p>¿No recibiste el código?</p>
+                    <button id="resend-btn" class="font-medium text-primary hover:underline">Reenviar código</button>
+                </div>
             </div>
 
             <footer class="w-full mt-auto pt-8">
@@ -130,5 +122,39 @@
             </footer>
         </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const resendBtn = document.getElementById('resend-btn');
+            let cooldown = 60;
+
+            resendBtn.addEventListener('click', () => {
+                // Deshabilitar el botón
+                resendBtn.disabled = true;
+                resendBtn.classList.add('text-gray-400', 'cursor-not-allowed');
+                resendBtn.classList.remove('text-primary', 'hover:underline');
+
+                // Lógica para reenviar el código (aquí iría la llamada a la API)
+                console.log('Reenviando código...');
+
+                // Iniciar cuenta regresiva
+                let timer = setInterval(() => {
+                    cooldown--;
+                    resendBtn.textContent = `Reenviar en ${cooldown}s`;
+
+                    if (cooldown <= 0) {
+                        clearInterval(timer);
+                        // Rehabilitar el botón
+                        resendBtn.disabled = false;
+                        resendBtn.textContent = 'Reenviar código';
+                        resendBtn.classList.remove('text-gray-400', 'cursor-not-allowed');
+                        resendBtn.classList.add('text-primary', 'hover:underline');
+                        cooldown = 60; // Reiniciar para la próxima vez
+                    }
+                }, 1000);
+            });
+        });
+    </script>
+
 </body>
 </html>

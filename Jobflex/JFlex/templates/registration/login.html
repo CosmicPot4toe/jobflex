@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validación de Empresa - JobFlex</title>
+    <title>Iniciar Sesión - JobFlex</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{% static '/CSS/style.css'%}">
     <script>
@@ -71,8 +71,8 @@
             </div>
             <!-- Post-it Note -->
             <div class="relative z-10 bg-light-gray text-dark p-6 rounded-lg shadow-2xl transform -rotate-3 max-w-xs">
-                <h3 class="font-bold text-lg mb-2">¡Atención Empresas!</h3>
-                <p class="text-sm">Al validar su RUT, podremos autocompletar la información de su empresa para agilizar el proceso de registro.</p>
+                <h3 class="font-bold text-lg mb-2">Dato Curioso</h3>
+                <p class="text-sm">El 85% de los puestos de trabajo no se publican en portales de empleo. ¡Aquí conectas directamente con los reclutadores!</p>
             </div>
         </div>
 
@@ -86,33 +86,90 @@
                     </h2>
                 </div>
 
-                <h2 class="text-3xl font-bold text-dark mb-2 text-center">Valida tu Empresa</h2>
-                <p class="text-secondary mb-8 text-center">Ingresa el RUT de tu empresa para comenzar el proceso de registro.</p>
+                                {% if messages %}
+                <div class="space-y-2 mb-4">
+                    {% for message in messages %}
+                    <div class="p-4 rounded-md {% if message.tags == 'success' %}bg-green-100 border-green-400 text-green-700{% else %}bg-blue-100 border-blue-400 text-blue-700{% endif %}" role="alert">
+                        <p class="font-bold">{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
 
-                <form action="{% url 'register_emp'%}" method="GET" class="space-y-6">
+                <h2 class="text-3xl font-bold text-dark mb-2 text-center">Iniciar Sesión</h2>
+                <p class="text-secondary mb-8 text-center">Ingresa tus credenciales para acceder a tu cuenta.</p>
+
+                <form method="post" action="{% url 'login' %}" class="space-y-6">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <span class="block sm:inline">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     <div>
-                        <label for="rut" class="block text-sm font-medium text-dark">RUT de la Empresa</label>
-                        <input type="text" name="rut" id="rut" required class="mt-1 block w-full p-3 border border-light-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: 76.123.456-7">
+                        <label for="id_username" class="block text-sm font-medium text-dark">Correo Electrónico</label>
+                        <input type="email" name="username" id="id_username" required class="mt-1 block w-full p-3 border border-light-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        {% if form.username.errors %}
+                            {% for error in form.username.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
-                    <div class="flex items-center">
-                        <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-primary border-light-gray rounded focus:ring-primary">
-                        <label for="terms" class="ml-2 block text-sm text-dark">Acepto los <a href="#" class="text-primary hover:underline">Términos y Condiciones</a></label>
+                    <div>
+                        <label for="id_password" class="block text-sm font-medium text-dark">Contraseña</label>
+                        <input type="password" name="password" id="id_password" required class="mt-1 block w-full p-3 border border-light-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                         {% if form.password.errors %}
+                            {% for error in form.password.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary border-light-gray rounded focus:ring-primary">
+                            <label for="remember-me" class="ml-2 block text-sm text-dark">Mantenerme conectado</label>
+                        </div>
+
+                        <div class="text-sm">
+                            <a href="{% url 'password_reset' %}" class="font-medium text-primary hover:underline">¿Olvidaste tu contraseña?</a>
+                        </div>
                     </div>
 
                     <div>
-                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform hover:scale-105">Validar y Continuar</button>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform hover:scale-105">Iniciar Sesión</button>
                     </div>
                 </form>
 
-                <p class="mt-8 text-center text-sm text-dark">
-                    ¿No eres una empresa?
-                    <a href="{% url 'signup'%}" class="font-medium text-primary hover:underline">Regístrate aquí</a>
-                </p>
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-light-gray"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-secondary">O continúa con</span>
+                        </div>
+                    </div>
 
-                <p class="mt-4 text-center text-sm text-dark">
-                    ¿Ya tienes una cuenta?
-                    <a href="{% url 'login'%}" class="font-medium text-primary hover:underline">Ingresa aquí</a>
+                    <div class="mt-6">
+                        <a href="#" class="w-full inline-flex justify-center py-3 px-4 border border-light-gray rounded-lg shadow-sm bg-white text-sm font-medium text-dark hover:bg-light-gray transition-all">
+                            <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.3v2.84C4.08 20.98 7.74 23 12 23z"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.16H2.3C1.42 8.84 1 10.36 1 12s.42 3.16 1.2 4.84l3.54-2.75z"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.74 1 4.08 3.02 2.3 6.16l3.54 2.75c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            <span>Continuar con Google</span>
+                        </a>
+                    </div>
+                </div>
+
+                <p class="mt-8 text-center text-sm text-dark">
+                    ¿Aún no tienes cuenta?
+                    <a href="{% url 'signup'%}" class="font-medium text-primary hover:underline">Regístrate aquí</a>
                 </p>
             </div>
 
@@ -129,6 +186,3 @@
                 </div>
             </footer>
         </div>
-    </main>
-</body>
-</html>
