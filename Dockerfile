@@ -35,5 +35,7 @@ RUN pip install --upgrade pip && pip install -r reqs.txt
 # Copy project files
 COPY . .
 
+WORKDIR /app/Jobflex
+
 # Set default command
 CMD ["gunicorn", "core.asgi:application", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
