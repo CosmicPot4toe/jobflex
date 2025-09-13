@@ -28,8 +28,8 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
 WORKDIR /app
 
 # Install Python dependencies
-COPY requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
+COPY reqs.txt .
+RUN pip install --upgrade pip && pip install -r reqs.txt
 
 # Copy project files
 COPY . .
