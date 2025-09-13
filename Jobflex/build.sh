@@ -2,11 +2,22 @@
 # Exit on error
 set -o errexit
 
-# Modify this line as needed for your package manager (pip, poetry, etc.)
+apt-get update && apt-get install -y \
+    curl \
+    gnupg2 \
+    unixodbc \
+    unixodbc-dev \
+    gcc \
+    g++ \
+    libffi-dev \
+    libssl-dev
+
+curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
+apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17
+
+
 pip install -r ../reqs.txt
-
-# Convert static asset files
 python manage.py collectstatic --no-input
-
-# Apply any outstanding database migrations
-python manage.py migrate
+#python manage.py migrate
