@@ -4,7 +4,7 @@ services:
     name: Jobflex
     runtime: docker
     repo: https://github.com/CosmicPot4toe/jobflex
-    dockerfilePath: ./Jobflex/Dockerfile
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: DEBUG
         value: 'FALSE'
