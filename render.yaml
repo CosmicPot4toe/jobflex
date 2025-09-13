@@ -2,10 +2,9 @@ services:
   - type: web
     plan: free
     name: Jobflex
-    runtime: python
-    rootDir: ./Jobflex
-    buildCommand: './build.sh'
-    startCommand: 'python -m gunicorn core.asgi:application -k uvicorn.workers.UvicornWorker' 
+    runtime: docker
+    repo: https://github.com/CosmicPot4toe/jobflex
+    dockerfilePath: ./Jobflex/Dockerfile
     envVars:
       - key: DEBUG
         value: 'FALSE'
